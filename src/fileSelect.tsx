@@ -6,10 +6,8 @@ interface fileSelectProps {
   onSelect: (file: File) => void;
 };
 
-const [selectFile, setSelectFile] = useState<File | null>(null);
-
 const FileSelect = ({ onSelect }: fileSelectProps) => {
-
+  const [selectFile, setSelectFile] = useState<File | null>(null);
   return (
     <div style={{ marginBottom: "10px" }}>
       <TextField 

@@ -19,10 +19,10 @@ const Home = () => {
     }),
   }));
 
-  const [selectFile, setSelectFile] = useState<File | null>(null);
+  // const [selectFile, setSelectFile] = useState<File | null>(null);
 
-  const handleFileSelect = (file: File): void => {
-    setSelectFile(file);
+  const handleFileSelect = (file: File) => {
+    console.log(file);
   };
 
   return (
