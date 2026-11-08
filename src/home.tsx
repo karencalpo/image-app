@@ -1,13 +1,13 @@
 import { useState } from "react";
-import { Button, TextField, Stack, Typography } from "@mui/material";
+import { Button, TextField } from "@mui/material";
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import FileSelect from './fileSelect';
 
 const Home = () => {
-  // const [count, setCount] = useState(0);
   const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: '#fff',
     ...theme.typography.body2,
@@ -19,36 +19,15 @@ const Home = () => {
     }),
   }));
 
+  const [selectFile, setSelectFile] = useState<File | null>(null);
+
+  const handleFileSelect = (file: File): void => {
+    setSelectFile(file);
+  };
+
   return (
     <>
-      <div
-        style={{
-          marginBottom: "10px"
-        }}
-      >
-        <TextField 
-          id="outlined-basic" 
-          variant="outlined" 
-          slotProps={{ htmlInput: { 'type': 'file' } }} 
-          size="small"
-          sx={{
-            marginBottom: 1
-          }}
-        />
-        <Button
-          type="submit"
-          role={undefined}
-          variant="contained"
-          tabIndex={-1}
-          startIcon={<CloudUploadIcon />}
-          sx={{
-            marginLeft: 2,
-            marginTop: 0.25
-          }}
-        >
-          Upload files
-        </Button>
-      </div>
+      <FileSelect onSelect={handleFileSelect} />
       <Box 
         sx={{ 
           flexGrow: 1, 
