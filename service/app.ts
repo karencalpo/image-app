@@ -3,7 +3,46 @@ import compression from "compression";
 import cors from "cors";
 import express from "express";
 import type { ErrorRequestHandler } from "express";
+import { type Request, type Response } from 'express';
 import { ABOUT, getConfig } from "./constants.ts";
+import multer from "multer";
+import { randomInt } from "node:crypto";
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads/");
+  },
+
+  filename: (req, file, cb) => {
+    const shortId = randomInt(36 ** 5).toString(36).padStart(5, "0");
+    const cleanName = file.originalname.replace(
+      /[^a-zA-Z0-9._-]/g,
+      "_"
+    );
+    const newName = `${shortId}-${cleanName}`;
+    cb(null, newName);
+  }
+
+  
+});
+
+const upload = multer({ 
+  storage,
+  fileFilter: (req, file, cb) => {
+    const allowed = [
+      "image/jpeg",
+      "image/png",
+      "image/webp",
+      "image/gif"
+    ];
+
+    if (allowed.includes(file.mimetype)) {
+      cb(null, true);
+    } else {
+      cb(null, false);
+    }
+  } 
+});
 
 interface AppOptions {
   publicDirectory?: string;
@@ -23,10 +62,24 @@ export const createApp = ({ publicDirectory = path.resolve("public"), allowedOri
   app.get("/about", (_request, response) => {
     response.status(200).type("text/plain").send(ABOUT);
   });
+  
   app.get("/api/health", (_request, response) => {
     response.json({ status: "ok" });
   });
+
+  app.post('/upload', upload.single('uploaded_file'), function (req, res) {
+    if(!req.file) {
+      res.status(400).json({
+        error: "No valid image file was provided"
+      });
+      return;
+    }
+    res.status(201).json({ message: "Upload successful" });
+  });
+
+
   app.use(express.static(publicDirectory));
+  app.use("/uploads", express.static("uploads"));
 
   const handleError: ErrorRequestHandler = (error: unknown, _request, response, _next) => {
     if (error instanceof SyntaxError && "status" in error && error.status === 400) {

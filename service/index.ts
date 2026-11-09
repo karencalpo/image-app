@@ -1,8 +1,12 @@
 import { createApp } from "./app.ts";
 import { ABOUT, getConfig } from "./constants.ts";
+import { mkdir } from "node:fs/promises";
+
 
 const { port, allowedOrigins } = getConfig();
 
+
+await mkdir("uploads", { recursive: true });
 const server = createApp({ allowedOrigins }).listen(port, error => {
   if (error) {
     console.error(error);

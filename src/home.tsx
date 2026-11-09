@@ -19,10 +19,24 @@ const Home = () => {
     }),
   }));
 
-  // const [selectFile, setSelectFile] = useState<File | null>(null);
+  const handleFileSelect = (file: File): void => {
+    const formData = new FormData();
 
-  const handleFileSelect = (file: File) => {
-    console.log(file);
+    formData.append("uploaded_file", file);
+
+    fetch("/upload", {
+      method: "POST",
+      body: formData
+    })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error('Upload was not successful');
+      }
+    })
+    .catch((error) => {
+      console.error("Error: ", error);
+      throw error;
+    });
   };
 
   return (
