@@ -80,17 +80,18 @@ const Home = () => {
         variant="h1"
         sx={{
           fontSize: "48pt",
-          marginBottom: 1
+          marginBottom: 2
         }}
       >
         Image Gallery
       </Typography>
       <FileSelect key={resetUpload} onSelect={handleFileSelect} />
       <SearchBar text={search} onChange={setSearch} />
+      <Typography variant="h5" sx={{ marginBottom: 2 }}>{filteredFiles.length} Image(s)</Typography>
       {files.length > 0 && filteredFiles.length > 0 ?
         <Box 
           sx={{ 
-            flexGrow: 1, 
+            flexGrow: 2, 
             borderStyle: "solid",
             borderWidth: "1px",
             borderColor: "rgba(0, 0, 0, 0.23)",
@@ -103,11 +104,11 @@ const Home = () => {
           {filteredFiles.map((file) => (
             <Grid 
               key={file} 
-              size={{ xs: 2, sm: 4, md: 4 }}
+              size={{ xs: 2, sm: 4, md: 6 }}
               sx={{
                 objectFit: "cover",
                 "& .MuiPaper-root": {
-                  height: "200px"
+                  height: "325px"
                 }
               }}  
             >
@@ -120,8 +121,7 @@ const Home = () => {
           ))
           }
           </Grid>
-        </Box> : 
-        <Typography>No images were found.</Typography>}
+        </Box> : ""}
     </>
   );
 };

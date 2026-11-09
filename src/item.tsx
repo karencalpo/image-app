@@ -11,6 +11,7 @@ const StyledPaper = styled(Paper)(({ theme }) => ({
   color: (theme.vars ?? theme).palette.text.secondary,
   ...theme.applyStyles('dark', {
     backgroundColor: '#1A2027',
+    marginBottom: '10px'
   }),
 }));
 
@@ -27,7 +28,7 @@ const Item = ({ file, onDelete }: ItemProps) => {
         alt={file}
         style={{
           width: "100%",
-          height: "180px",
+          height: "300px",
           objectFit: "cover"
         }}
       />

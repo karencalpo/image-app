@@ -32,7 +32,6 @@ const FileSelect = ({ onSelect }: fileSelectProps) => {
           type="submit"
           role={undefined}
           variant="contained"
-          tabIndex={-1}
           startIcon={<CloudUploadIcon />}
           onClick = {() => { 
             if(selectFile !== null) {
