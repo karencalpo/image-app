@@ -8,6 +8,7 @@ interface fileSelectProps {
 
 const FileSelect = ({ onSelect }: fileSelectProps) => {
   const [selectFile, setSelectFile] = useState<File | null>(null);
+  
   return (
     <div style={{ marginBottom: "10px" }}>
       <TextField 
@@ -27,6 +28,7 @@ const FileSelect = ({ onSelect }: fileSelectProps) => {
           }}
         />
         <Button
+          disableRipple
           type="submit"
           role={undefined}
           variant="contained"

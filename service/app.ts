@@ -7,6 +7,7 @@ import { type Request, type Response } from 'express';
 import { ABOUT, getConfig } from "./constants.ts";
 import multer from "multer";
 import { randomInt } from "node:crypto";
+import { readdir, unlink } from 'node:fs/promises';
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -67,7 +68,7 @@ export const createApp = ({ publicDirectory = path.resolve("public"), allowedOri
     response.json({ status: "ok" });
   });
 
-  app.post('/upload', upload.single('uploaded_file'), function (req, res) {
+  app.post('/api/upload', upload.single('uploaded_file'), (req, res) => {
     if(!req.file) {
       res.status(400).json({
         error: "No valid image file was provided"
@@ -77,6 +78,28 @@ export const createApp = ({ publicDirectory = path.resolve("public"), allowedOri
     res.status(201).json({ message: "Upload successful" });
   });
 
+  app.get('/api/images', async (req, res) => {
+    try {
+      const files = await readdir("uploads");
+      res.send(files);
+    } catch (err) {
+      res.status(500).json({ message: "Failed to retrieve images" });
+    }
+  });
+
+  app.delete('/api/delete/:filename', async (req, res) => {
+    try {
+      const filename = req.params.filename;
+      if (!filename) {
+        res.status(400).json({ message: "Not a valid filename" });
+        return;
+      };
+      await unlink(path.join("uploads", filename));
+      res.status(204).end();
+    } catch (err) {
+      res.status(500).json({ message: "Cannot delete file." });
+    }
+  });
 
   app.use(express.static(publicDirectory));
   app.use("/uploads", express.static("uploads"));
