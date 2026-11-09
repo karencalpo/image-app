@@ -9,7 +9,7 @@
     "npm": ">=12"
   },
   "scripts": {
-    "start": "node dist/service/index.js",
+    "start": "npm run build && node dist/service/index.js",
     "start:dev": "webpack serve --mode development",
     "dev:server": "node --watch service/index.ts",
     "dev": "webpack --mode development",
