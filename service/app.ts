@@ -22,8 +22,6 @@ const storage = multer.diskStorage({
     const newName = `${shortId}-${cleanName}`;
     cb(null, newName);
   }
-
-  
 });
 
 const upload = multer({ 

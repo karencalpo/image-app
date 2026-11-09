@@ -31,7 +31,6 @@ const FileSelect = ({ onSelect }: fileSelectProps) => {
         <Button
           disableRipple
           type="submit"
-          role={undefined}
           variant="contained"
           startIcon={<CloudUploadIcon />}
           onClick = {() => { 

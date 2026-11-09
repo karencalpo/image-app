@@ -1,7 +1,7 @@
 # Image Gallery
 
 This is an image gallery app that makes use of the following technologies. On the front-end, TypeScript/React was used along with Material UI for the styling of the components for this SPA.
-On the back-end, Node.js was used for running the service and Express.js for the routing and APIs. I wrote APIs following RESTful standards. I used Multer, which is a middleware for Node.js and Express.js, that handles receiving and storing file uploads.
+On the back-end, Node.js was used for running the service and Express.js for the routing and APIs. I wrote APIs following RESTful standards. I used Multer, which is a middleware for Node.js and Express.js, that handles receiving and storing file uploads. I also initially used scaffolding to build the boilerplate code for this app. It is a repo I am familiar with and had used for work and personal projects before.
 
 ## Notes
 
