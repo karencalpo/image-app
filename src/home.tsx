@@ -2,20 +2,19 @@ import { useState, useEffect } from "react";
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import { styled } from "@mui/material/styles";
 import FileSelect from './fileSelect';
 import Item from './item';
+import SearchBar from './searchBar';
 
 const Home = () => {
 
   const [files, setFiles] = useState<string[]>([]);
   const [resetUpload, setResetUpload] = useState(0);
+  const [search, setSearch] = useState("");
 
-  
-  // const StyledTypography = styled(Typography)(({ theme }) => ({
-  //   ...theme.typography.h1,
-  //   fontSize: "18px"
-  // }));
+  const filteredFiles = files.filter((file) => {
+    return file.toLowerCase().includes(search.toLowerCase());
+  });
 
   const handleFiles = () => {
     fetch("/api/images", {
@@ -80,46 +79,49 @@ const Home = () => {
       <Typography 
         variant="h1"
         sx={{
-          fontSize: "48pt"
+          fontSize: "48pt",
+          marginBottom: 1
         }}
       >
         Image Gallery
       </Typography>
       <FileSelect key={resetUpload} onSelect={handleFileSelect} />
-      {files.length > 0 ? 
-      <Box 
-        sx={{ 
-          flexGrow: 1, 
-          borderStyle: "solid",
-          borderWidth: "1px",
-          borderColor: "rgba(0, 0, 0, 0.23)",
-          borderRadius: "10px",
-          padding: "15px 15px 50px 15px"
+      <SearchBar text={search} onChange={setSearch} />
+      {files.length > 0 && filteredFiles.length > 0 ?
+        <Box 
+          sx={{ 
+            flexGrow: 1, 
+            borderStyle: "solid",
+            borderWidth: "1px",
+            borderColor: "rgba(0, 0, 0, 0.23)",
+            borderRadius: "10px",
+            padding: "15px 15px 50px 15px"
 
-        }}
-      >
-      <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
-              {files.map((file) => (
-                <Grid 
-                  key={file} 
-                  size={{ xs: 2, sm: 4, md: 4 }}
-                  sx={{
-                    objectFit: "cover",
-                    "& .MuiPaper-root": {
-                      height: "200px"
-                    }
-                  }}  
-                >
-                  <Item 
-                    key={file}
-                    file={file}
-                    onDelete={handleDelete}
-                  />
-                </Grid>
-              ))
-              }
-        </Grid>
-      </Box>: "No images found."}
+          }}
+        >
+        <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
+          {filteredFiles.map((file) => (
+            <Grid 
+              key={file} 
+              size={{ xs: 2, sm: 4, md: 4 }}
+              sx={{
+                objectFit: "cover",
+                "& .MuiPaper-root": {
+                  height: "200px"
+                }
+              }}  
+            >
+              <Item 
+                key={file}
+                file={file}
+                onDelete={handleDelete}
+              />
+            </Grid>
+          ))
+          }
+          </Grid>
+        </Box> : 
+        <Typography>No images were found.</Typography>}
     </>
   );
 };

@@ -10,7 +10,7 @@ const FileSelect = ({ onSelect }: fileSelectProps) => {
   const [selectFile, setSelectFile] = useState<File | null>(null);
   
   return (
-    <div style={{ marginBottom: "10px" }}>
+    <>
       <TextField 
           id="file_pick" 
           variant="outlined" 
@@ -46,7 +46,7 @@ const FileSelect = ({ onSelect }: fileSelectProps) => {
         >
           Upload files
         </Button>    
-    </div>
+    </>
   );
 };
 

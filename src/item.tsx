@@ -17,7 +17,7 @@ const StyledPaper = styled(Paper)(({ theme }) => ({
 type ItemProps = {
   file: string;
   onDelete: (file: string) => void;
-}
+};
 
 const Item = ({ file, onDelete }: ItemProps) => {
   return (
