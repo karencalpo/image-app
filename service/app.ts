@@ -3,8 +3,7 @@ import compression from "compression";
 import cors from "cors";
 import express from "express";
 import type { ErrorRequestHandler } from "express";
-import { type Request, type Response } from 'express';
-import { ABOUT, getConfig } from "./constants.ts";
+import { getConfig } from "./constants.ts";
 import multer from "multer";
 import { randomInt } from "node:crypto";
 import { readdir, unlink } from 'node:fs/promises';
@@ -59,10 +58,6 @@ export const createApp = ({ publicDirectory = path.resolve("public"), allowedOri
   app.use(cors({ origin: allowedOrigins, credentials: true }));
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
-
-  app.get("/about", (_request, response) => {
-    response.status(200).type("text/plain").send(ABOUT);
-  });
   
   app.get("/api/health", (_request, response) => {
     response.json({ status: "ok" });
