@@ -7,9 +7,12 @@ coverage
 .env.*
 !.env.example
 
+
 # Dependencies and generated output
 node_modules/
+uploads/
 .npm/
 dist/
 public/
 *.tgz
+
